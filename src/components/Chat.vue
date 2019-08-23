@@ -1,6 +1,8 @@
 <template>
     <div id="chat">
         <van-cell class='top' v-bind:title="this.$route.params.name" icon='arrow-left' to="/weixin"></van-cell>
+        <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <p>刷新次数: {{ count }}</p>
         <van-row class="chat-center" id="chatcenter">
             <ul id='ul' class="chat-ul">
                 <li v-for="item in messageCache" v-bind:key='item.name'>
@@ -19,6 +21,8 @@
                 </li>
             </ul>
         </van-row>
+        </van-pull-refresh>
+        
         <!-- <div class="chat-center">{{messageCache}}</div> -->
         <van-cell-group class="chat-bottom" id='input'>
             <van-field 
@@ -55,11 +59,15 @@ export default {
             msg:'11111',
             items:[],
             curItem: [],
-            myname:'',
             message:'',
             scrollTop:0,
-            chatImage:false
+            chatImage:false,
             // websocket: null,
+            count: 0,
+            isLoading: false,
+            numPerPage:20,
+            num1:0,
+            num2:0,
         }
     },
     inject:['createWebSocket','reload', 'send', 'closeWebSocket', 'setOnmessage', 'setOnmessageMessage'],
@@ -68,7 +76,7 @@ export default {
     },
     watch:{
         items(){
-            this.scrollToBottom();
+            // this.scrollToBottom();
         }
     },
     computed:{
@@ -114,6 +122,7 @@ export default {
                 console.log(newRecords);
             }
             console.log(this.items);
+            console.log("------------------------------------------------------------------------------------------");
             return this.items;
         }
     },
@@ -129,22 +138,26 @@ export default {
                 that.submit();
             }
         }
-        console.log("chat created");
 
+        console.log("chat created");
+        this.count = 0;
+        this.num1 = 0;
+        let num1 = this.num1 * this.numPerPage;
+        let num2 = this.numPerPage;
         let name = sessionStorage.getItem('loginName');
         let nickname = sessionStorage.getItem('loginNickname');
+        let curName = this.$route.params.name;
         console.log('login name is: ' + name);
 
         this.$http({
             method: 'get',
-            url:'/apis/weixin',
-            params:{userName:name}
+            url:'/apis/select_records',
+            params:{"userName":name,"toName":curName, "num1":num1, "num2":num2}
         }).then((res)=>
         {
             let records = res.body;
-            this.myname = this.$route.params.name;
-            let curName = this.$route.params.name;
             let newRecords = [];
+            this.num1++;
             // console.log(records);
 
             if(records == null){
@@ -154,11 +167,7 @@ export default {
             else{
                 //虽然读出来应该已经是有序的，不过还是按时间排个序
                 records.sort(sortTime);
-                // console.log(records);
                 records.forEach(element => {
-                    // console.log(element);
-                    // console.log("element.name: " + element.name);
-                    // console.log("curName: " + curName);
                     if(element.name == curName && localStorage.getItem(element.name)){
                         element["img"] = "../../static/headimg/" + JSON.parse(localStorage.getItem(element.name)).img;
                         element["time"] = new Date(element["time"]).toLocaleString();
@@ -169,23 +178,18 @@ export default {
                     }
                     if(element.toName == curName && localStorage.getItem(element.toName)){
                         element["img"] = "../../static/headimg/" + JSON.parse(localStorage.getItem(element.toName)).img;
+                        element["time"] = new Date(element["time"]).toLocaleString();
                         if(element["chatimg"]){
                             element["chatimg"] = "../../static/chatimg/" + element["chatimg"];
                         }
-                        element["time"] = new Date(element["time"]).toLocaleString();
                         newRecords.push(element);
                     }
 
                 })
                 this.items = newRecords;
-                // window.scrollTo(0, 0);
                 this.scrollToBottom();
             }
         })
-        .then(()=>{
-            // 将全局的Onmessage改为chat局部的
-            // this.setOnmessage(this.setOnmessageChat);
-        });
         
     },
     methods:{
@@ -291,6 +295,73 @@ export default {
                 this.chatImage = false
             }
         },
+
+        onRefresh() {
+            let that = this;
+            setTimeout(() => {
+                that.$toast('刷新成功');
+                that.isLoading = false;
+                that.count++;
+                that.num1++;
+
+                let name = sessionStorage.getItem('loginName');
+                let nickname = sessionStorage.getItem('loginNickname');
+                let curName = that.$route.params.name;
+                console.log('login name is: ' + name);
+                let num1 = that.num1 * that.numPerPage;
+                let num2 = that.numPerPage;
+                that.$http({
+                    method: 'get',
+                    url:'/apis/select_records',
+                    params:{"userName":name,"toName":curName, "num1":num1, "num2":num2}
+                }).then((res)=>
+                {
+                    let records = res.body;
+                    // let curName = that.$route.params.name;
+                    let newRecords = [];
+                    console.log("records");
+                    console.log(records);
+
+                    if(records == null){
+                        console.log("Get nothing!");
+                        return ;
+                    }
+                    else{
+                        //虽然读出来应该已经是有序的，不过还是按时间排个序
+                        records.sort(sortTime);
+                        console.log("after sort: ");
+                        console.log(records);
+                        records.forEach(element => {
+                            if(element.name == curName && localStorage.getItem(element.name)){
+                                element["img"] = "../../static/headimg/" + JSON.parse(localStorage.getItem(element.name)).img;
+                                element["time"] = new Date(element["time"]).toLocaleString();
+                                if(element["chatimg"]){
+                                    element["chatimg"] = "../../static/chatimg/" + element["chatimg"];
+                                }
+                                newRecords.push(element);
+                            }
+                            if(element.toName == curName && localStorage.getItem(element.toName)){
+                                element["img"] = "../../static/headimg/" + JSON.parse(localStorage.getItem(element.toName)).img;
+                                element["time"] = new Date(element["time"]).toLocaleString();
+                                if(element["chatimg"]){
+                                    element["chatimg"] = "../../static/chatimg/" + element["chatimg"];
+                                }
+                                newRecords.push(element);
+                            }
+
+                        })
+                        console.log("newRecords: ");
+                        console.log(newRecords);
+                        that.items = newRecords.concat(that.items);
+                        console.log("that.items: ");
+                        console.log(that.items);
+                        // that.scrollToBottom();
+                    }
+                })
+            }, 500);
+        },
+
+
         scrollToBottom: function () {
             this.$nextTick(() => {
                     let div = document.getElementById('ul');

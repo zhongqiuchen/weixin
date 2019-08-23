@@ -62,7 +62,6 @@ export default {
     methods:{
         //页面初始化之后会触发一次，在页面往下加载的过程中会多次调用【上拉加载】
         onLoad() {
-            console.log("=============================================== onLoad " + this.pageNumber + "==============================");
             let self = this;
             setTimeout(() => {
                 // alert("onLoad");
@@ -84,19 +83,11 @@ export default {
                         console.log("data == null");
                     }
                     else{
-                        // console.log("newPages: ");
-                        // console.log(data);
-                        // console.log("size: ");
-                        // console.log(data.length);
                         data.forEach(element => {
                             element["imgSrc"] = "../../static/headimg/" + JSON.parse(localStorage.getItem(element.name)).img;
                             if(element["friendImgs"]){
                                 element["friendImgs"] = "../../static/friendimg/" + element["friendImgs"];
                             }
-                            // console.log(element);
-                            // console.log("element[img]: ");
-                            // console.log(element["imgSrc"]);
-                            // console.log(JSON.parse(localStorage.getItem(element.name)).img);
                         })
                         this.friendsShow = this.friendsShow.concat(data);
                         this.pageNumber++;
