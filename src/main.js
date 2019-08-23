@@ -12,7 +12,7 @@ Vue.use(Vant);
 Vue.config.productionTip = false;
 Vue.use(VueResource);
 
-// 通过session检测登录
+// 通过sessionStorage检测登录
 // router.beforeEach(function (to, from, next) {
 //   let login = sessionStorage.getItem("login");
 //   // // console.log("beforeEach login: "+login);

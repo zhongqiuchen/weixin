@@ -117,7 +117,7 @@ export default {
       else {
         console.log("createWebSocket失败，登录状态为： ");
         console.log(sessionStorage.getItem("login"))
-        alert('当前浏览器 Not support websocket or 未登录');
+        // alert('当前浏览器 Not support websocket or 未登录');
       }
     },
     //websocket创建之后，初始化websocket
