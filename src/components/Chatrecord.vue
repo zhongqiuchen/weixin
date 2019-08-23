@@ -38,17 +38,6 @@ export default {
       console.log(this.record);
       console.log(this.record.time);
       console.log("============================");
-
-      // let name = this.record.name;
-      
-      // if(localStorage.getItem(name)){
-      //   this.record.imgSrc = "../../static/headimg/" + JSON.parse(localStorage.getItem(name)).img;
-      // }
-      // else{
-      //   console.log(this.record.name);
-      //   console.log(localStorage.getItem(name));
-      // }
-      // this.record.time = new Date(this.record.time).toLocaleString();
     }
 
 }
@@ -56,9 +45,9 @@ export default {
 
 <style>
 .chatrecord{
-    min-height:80px;
+    min-height:10vh;
     width:auto;
-    font-size: 18px;
+    font-size: 1.2rem;
     text-align: left;
     border-top: 1px solid  rgba(200,200,200,0.5);
     border-bottom: 1px solid  rgba(200,200,200,0.5);
@@ -68,11 +57,11 @@ export default {
 }
 
 .chatrecord-name{
-  font-size: 25px;
+  font-size: 1.2rem;
 
 }
 .chatrecord-num{
-  font-size: 13px;
+  font-size: 0.8rem;
   margin-top: 2px;
   width:100%;
   overflow: hidden;
@@ -80,7 +69,7 @@ export default {
 	white-space: nowrap;
 }
 .chatrecord-time{
-  font-size: 13px;
+  font-size: 0.6rem;
   display: flex;
   justify-content: flex-end;
 }

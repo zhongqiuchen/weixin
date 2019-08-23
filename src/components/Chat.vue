@@ -121,6 +121,14 @@ export default {
         // this.setOnmessage(this.setOnmessageMessage);
     },
     created(){
+        //绑定键盘回车事件
+        let that = this;
+        document.onkeydown = function(e){
+            let key = window.event.keyCode;
+            if(key == 13){
+                that.submit();
+            }
+        }
         console.log("chat created");
 
         let name = sessionStorage.getItem('loginName');

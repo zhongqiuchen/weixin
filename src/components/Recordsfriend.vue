@@ -43,7 +43,7 @@ export default {
     max-height:100%;
 }
 .recordsfriend{
-    min-height:38px;
+    min-height:10vh;
     max-width: 100%;
     background: white;
     border: 0px solid black;
@@ -54,7 +54,7 @@ export default {
     white-space:normal;
     text-align: left;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 1.1rem;
     overflow:hidden;
     /* display: flex;
     align-items: center; */
@@ -65,22 +65,22 @@ export default {
 }
 .recordsfriend_col1{
     max-width:30%;
-    margin-top:10px;
+    margin-top:0.5rem;
 }
 .recordsfriend_col2{
     max-width:70%;
 }
 .recordsfriend_info{
-    margin-top: 10px;
-    margin-bottom: 10px;
+    /* margin-top: 10px; */
+    margin-bottom: 0.5rem;
     max-width: 80%;
     word-wrap: break-word;
 }
 .recordsfriend_name{
-  font-size: 22px;
+  font-size: 1.1rem;
 }
 .recordsfriend_content{
-  font-size: 18px;
+  font-size: 0.9rem;
   word-wrap: break-word;
 }
 </style>

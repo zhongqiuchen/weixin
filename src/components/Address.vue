@@ -6,11 +6,12 @@
     <van-cell title="标签" icon="../../static/img/标签.png" size="large"/>
     <van-cell title="公众号" icon="../../static/img/公众号.png" size="large"/>
     
-    <van-index-bar :index-list="indexList">
+    <van-index-bar :index-list="indexList" :sticky="true" :sticky-offset-top="offsetTop">
       <div v-for="(values,key) in letters" v-bind:key="key" >
         <!-- <van-index-anchor v-bind:index="key"/> -->
         <van-index-anchor v-bind:index="key">{{key}}</van-index-anchor>
         <van-cell 
+          class="friends-cell"
           v-for="value in values" 
           v-bind:key="value" 
           v-bind:title="value" 
@@ -52,7 +53,8 @@ export default {
       titles:["Helen", "Nancy", "Jack", "Tom", "Jerry"],
       letters:{},
       people:{},
-      indexList:[]
+      indexList:[],
+      offsetTop:window.innerHeight/12
     }
   },
   created(){
@@ -107,8 +109,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .address{
-  margin-bottom: 70px;
+  margin-bottom: 10vh;
   text-align: left;
+}
+.address-bar{
+  top:20vh;
 }
 .background{
   background: grey;
@@ -123,5 +128,8 @@ export default {
 .icon-large{
   width:3vh;
   height:3vh;
+}
+.friends-cell{
+  font-size: 2rem;
 }
 </style>

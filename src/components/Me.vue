@@ -72,9 +72,9 @@ export default {
   margin-bottom: 70px;
 }
 .me_myinfo{
-  min-height:150px;
+  min-height:23vh;
   width:100%;
-  font-size: 18px;
+  font-size: 1rem;;
   text-align: left;
   border-top: 1px solid  rgba(200,200,200,0.5);
   border-bottom: 1px solid  rgba(200,200,200,0.5);
@@ -83,15 +83,17 @@ export default {
   align-items:center;
 }
 .me_img{
-  width:80px;
-  height:80px;
+  width:22%;
+  height:20%;
   border-radius: 5px;
+  margin-left:0.5rem;
 }
 .me_info{
-  min-width:200px;
+  min-width:10rem;
 }
 .me_jump{
   display: flex;
   justify-content: flex-end;
+  margin-right:0.6rem;
 }
 </style>

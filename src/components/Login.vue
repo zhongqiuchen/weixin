@@ -27,6 +27,15 @@ export default {
     },
     inject:['createWebSocket'],
     created(){
+        //绑定键盘回车事件
+        let that = this;
+        document.onkeydown = function(e){
+            let key = window.event.keyCode;
+            if(key == 13){
+                that.submitToToken();
+            }
+        }
+
         let data = JSON.parse(localStorage.getItem("loginData"));
         if(data != undefined){
             console.log("load img succeed");

@@ -133,7 +133,7 @@ function chunk(arr, size) {
 }
 .myicon{
     width:100%;
-    height:250px;
+    height:30vh;
     background-image: url('../../static/img/黑色磨砂.jpg');
     background-position: top;
     background-size: 100% 80%;
@@ -144,13 +144,14 @@ function chunk(arr, size) {
     align-items: flex-end;
 }
 .myimg{
-  max-width:30%;
-  font-size: 18px;
+    margin-right:0.5rem;
+    max-width:30%;
+    font-size: 1.1rem;
 }
 .myname{
-  max-width:70%;
-  min-height:85px;
-  color: white;
+    max-width:70%;
+    min-height:10vh;
+    color: white;
 }
 .loading{
     width:100%;

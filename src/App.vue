@@ -13,11 +13,6 @@
       <chatrecord 
         v-bind:record ="popup_content">
       </chatrecord>
-      <!-- <van-image
-        width="100"
-        height="100"
-        src="https://img.yzcdn.cn/vant/cat.jpeg"
-      /> -->
     </van-popup>
     <router-view class='view' v-if="isRouterAlive"></router-view>
     <van-tabbar route class="tabbar-class" v-if="$route.meta.tabbar">
