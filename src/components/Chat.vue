@@ -3,6 +3,7 @@
         <van-cell class='top' v-bind:title="this.$route.params.name" icon='arrow-left' to="/weixin"></van-cell>
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <p>刷新次数: {{ count }}</p>
+        
         <van-row class="chat-center" id="chatcenter">
             <ul id='ul' class="chat-ul">
                 <li v-for="item in messageCache" v-bind:key='item.name'>
@@ -50,6 +51,8 @@
 <script>
 import Recordsleft from "./Recordsleft"
 import Recordsright from "./Recordsright"
+import { Toast } from 'vant'
+import { Notify } from 'vant';
 
 export default {
     name:'chat',
@@ -72,7 +75,7 @@ export default {
     },
     inject:['createWebSocket','reload', 'send', 'closeWebSocket', 'setOnmessage', 'setOnmessageMessage'],
     components:{
-        Recordsleft,Recordsright
+        Recordsleft,Recordsright,Toast
     },
     watch:{
         items(){
@@ -257,6 +260,7 @@ export default {
                 let data = this.message;
                 if(!data && !chatimg){
                     console.log("Empty message");
+                    Toast('Empty message');
                     return;
                 }
                 let name = sessionStorage.getItem("loginName");

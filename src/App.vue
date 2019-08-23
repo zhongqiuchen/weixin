@@ -54,6 +54,7 @@
 
 <script>
 import chatrecord from "./components/Chatrecord"
+import { Toast} from 'vant'
 
 export default {
   name: 'App',
@@ -72,7 +73,7 @@ export default {
     }
   },
   components:{
-    chatrecord
+    chatrecord,Toast
   },
   computed:{
     flag: function(){
@@ -137,6 +138,8 @@ export default {
     setOncloseMessage() {
         let data = "WebSocket连接关闭" + '   状态码：' + this.websocket.readyState;
         console.log("setOncloseMessage: " + data);
+        Toast('WebSocket连接关闭');
+        
         let that = this;
         let timeout = 1000;
         setTimeout(()=>{
@@ -153,6 +156,7 @@ export default {
     setOnopenMessage() {
         let data = "WebSocket连接成功" + '   状态码：' + this.websocket.readyState;
         console.log("setOnopenMessage: " + data);
+        Toast.clear();
         //开始计时
         this.resetTimers();
     },
